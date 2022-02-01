@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+    /*
     [SerializeField] private CharacterController controller;
-    [SerializeField] private Camera cam;
     [SerializeField] private float speed = 6f;
     [SerializeField] private float gravity;
-    [SerializeField] private Transform gun;
-
-    
     private Vector3 moveDirection;
+    */
+    
+    public CharacterController controller;
+    public float speed;
+
+    [SerializeField] private Transform cam, gun;
+    //public Transform cam;
+ 
+
 
     void Start()
     {
@@ -20,6 +25,39 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        float Horizontal = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+        float Vertical = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+
+        Vector3 Movement = cam.transform.right * Horizontal + cam.transform.forward * Vertical;
+        Movement.y = 0f;
+
+
+
+        controller.Move(Movement);
+        gun.transform.localRotation = Quaternion.Euler(new Vector3(cam.transform.rotation.eulerAngles.x, 0, 0));
+
+        if (Movement.magnitude != 0f)
+        {
+            transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * CameraMovement.instance.sensivity * Time.deltaTime);
+
+
+            Quaternion CamRotation = cam.rotation;
+            CamRotation.x = 0f;
+            CamRotation.z = 0f;
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, CamRotation, 0.1f);
+
+        }
+    }
+
+    
+
+    /*
     
     private void Update()
     {
@@ -56,7 +94,6 @@ public class PlayerMovement : MonoBehaviour
         gun.transform.localRotation = Quaternion.Euler(new Vector3(cam.transform.rotation.eulerAngles.x, 0, 0));
     }
 
-    /*
      
     public void GetMoveInput(InputAction.CallbackContext context)
     {
