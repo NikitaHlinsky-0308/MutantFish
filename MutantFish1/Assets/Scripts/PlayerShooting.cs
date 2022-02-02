@@ -13,7 +13,8 @@ public class PlayerShooting : MonoBehaviour
 
     void Update()
     {
-      
+        firePoint.LookAt(CameraMovement.instance.targetLook);
+
         if (Input.GetKey(KeyCode.Mouse0) && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;

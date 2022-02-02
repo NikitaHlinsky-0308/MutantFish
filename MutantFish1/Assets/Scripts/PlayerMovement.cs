@@ -4,29 +4,11 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    /*
     [SerializeField] private CharacterController controller;
-    [SerializeField] private float speed = 6f;
-    [SerializeField] private float gravity;
-    private Vector3 moveDirection;
-    */
-    
-    public CharacterController controller;
-    public float speed;
-
+    [SerializeField] private float speed;
     [SerializeField] private Transform cam, gun;
-    //public Transform cam;
- 
 
 
-    void Start()
-    {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-    }
-
-
-    // Update is called once per frame
     void Update()
     {
 
@@ -39,19 +21,18 @@ public class PlayerMovement : MonoBehaviour
 
 
         controller.Move(Movement);
+        // weapon rotation 
         gun.transform.localRotation = Quaternion.Euler(new Vector3(cam.transform.rotation.eulerAngles.x, 0, 0));
-
+        // player rotation, facing to the direction of camera watching
+        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * CameraMovement.instance.sensivity * Time.deltaTime);
+        
         if (Movement.magnitude != 0f)
         {
-            transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * CameraMovement.instance.sensivity * Time.deltaTime);
-
-
             Quaternion CamRotation = cam.rotation;
             CamRotation.x = 0f;
             CamRotation.z = 0f;
 
             transform.rotation = Quaternion.Lerp(transform.rotation, CamRotation, 0.1f);
-
         }
     }
 

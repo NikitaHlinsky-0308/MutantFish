@@ -5,20 +5,23 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public static CameraMovement instance;
+    
+    [SerializeField] private Transform lookAt, Player, cam;
+    [SerializeField] private float distance;
 
+    // camera clampin angles1
     private const float YMin = -17.0f;
     private const float YMax = 50.0f;
 
-    [SerializeField] private Transform lookAt;
+    public Transform targetLook;
 
-    [SerializeField] private Transform Player;
 
-    public float distance = 10.0f;
-    private float currentX = 0.0f;
-    private float currentY = 0.0f;
+    private float currentX = 0.0f, currentY = 0.0f;
     public float sensivity;
+    
+    
 
-
+    //1
     private void Awake()
     {
         instance = this;
@@ -45,6 +48,24 @@ public class CameraMovement : MonoBehaviour
         transform.position = lookAt.position + rotation * Direction;
 
         transform.LookAt(lookAt.position);
+
+        TargetLook();
+    }
+
+    public void TargetLook()
+    {
+        Ray ray = new Ray(cam.position, cam.forward * 1000);
+        RaycastHit hit;
+        
+        if(Physics.Raycast(ray, out hit))
+        {
+            targetLook.position = Vector3.Lerp(targetLook.position, hit.point, Time.deltaTime * 30);
+        }
+        else
+        {
+            targetLook.position = Vector3.Lerp(targetLook.position, targetLook.transform.forward * 150, Time.deltaTime);
+        }
+        
 
 
     }
