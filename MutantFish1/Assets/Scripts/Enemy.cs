@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
 {
     public NavMeshAgent agent;
 
-    public Transform player;
+    [SerializeField] private Transform player;
 
     public LayerMask whatIsGround, whatIsPlayer;
 
@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        //player = GameObject.Find("PlayerObj").transform;
+        player = GameObject.FindWithTag("Player").transform;
         //agent = GetComponent<NavMeshAgent>();
     }
 
