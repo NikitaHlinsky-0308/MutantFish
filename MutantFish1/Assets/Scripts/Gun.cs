@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShooting : MonoBehaviour
+public class Gun : MonoBehaviour
 {
-
     [SerializeField] private GameObject prefab;
-    private Transform firePoint;
     [SerializeField] private float fireRate;
+    private Transform firePoint;
     private float nextFire = 0f;
 
 
@@ -27,5 +24,4 @@ public class PlayerShooting : MonoBehaviour
             Instantiate(prefab, firePoint.position, firePoint.rotation);
         }
     }
-
 }
