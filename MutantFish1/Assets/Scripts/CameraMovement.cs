@@ -49,7 +49,7 @@ public class CameraMovement : MonoBehaviour
 
         transform.LookAt(lookAt.position);
 
-        TargetLook();
+        //TargetLook();
     }
 
     public void TargetLook()
@@ -65,8 +65,6 @@ public class CameraMovement : MonoBehaviour
         {
             targetLook.position = Vector3.Lerp(targetLook.position, targetLook.transform.forward * 150, Time.deltaTime);
         }
-        
-
-
+     
     }
 }

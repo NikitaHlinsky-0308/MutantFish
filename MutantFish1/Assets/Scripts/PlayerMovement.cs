@@ -8,10 +8,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Transform cam, gun;
 
+    Animator anim;
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
+
 
     void Update()
     {
-
+        /*
         float Horizontal = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         float Vertical = Input.GetAxis("Vertical") * speed * Time.deltaTime;
 
@@ -33,8 +40,42 @@ public class PlayerMovement : MonoBehaviour
             CamRotation.z = 0f;
 
             transform.rotation = Quaternion.Lerp(transform.rotation, CamRotation, 0.1f);
+        } 
+        */
+
+        float Horizontal = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
+        float Vertical = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+
+        Vector3 Movement = cam.transform.right * Horizontal + cam.transform.forward * Vertical;
+        //Vector3 Movement = new Vector3(Vertical, 0.0f, Horizontal);
+        Movement.y = 0f;
+
+        gun.transform.localRotation = Quaternion.Euler(new Vector3(cam.transform.rotation.eulerAngles.x, 0, 0));
+        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * CameraMovement.instance.sensivity * Time.deltaTime);
+        controller.Move(Movement);
+
+        if (Movement.magnitude != 0f)
+        {
+            Quaternion CamRotation = cam.rotation;
+            CamRotation.x = 0f;
+            CamRotation.z = 0f;
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, CamRotation, 0.1f);
+
         }
+
+        Movement.Normalize();
+        LocomotionAnim();
     }
+
+    private void LocomotionAnim()
+    {
+        float velocityZ = Input.GetAxis("Vertical");
+        float velocityX = Input.GetAxis("Horizontal");
+
+        anim.SetFloat("VelocityX", velocityX);
+        anim.SetFloat("VelocityZ", velocityZ);
+    } 
 
     
 
