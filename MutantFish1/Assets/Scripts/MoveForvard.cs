@@ -5,11 +5,13 @@ using UnityEngine;
 public class MoveForvard : MonoBehaviour
 {
     [SerializeField] private float speed;
+    private ContactDamage ContDmg;
     private Vector3 lastPos;
 
     private void Start()
     {
         lastPos = transform.position;
+        ContDmg = GetComponent<ContactDamage>();
     }
 
     void Update()
@@ -20,7 +22,8 @@ public class MoveForvard : MonoBehaviour
 
         if (Physics.Linecast(lastPos, transform.position, out hit))
         {
-            print(hit.transform.name);
+            //print(hit.transform.name);
+            ContDmg.DamageDeal(hit);
             Destroy(gameObject);
         }
         lastPos = transform.position;

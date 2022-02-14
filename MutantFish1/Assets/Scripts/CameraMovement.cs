@@ -49,7 +49,7 @@ public class CameraMovement : MonoBehaviour
 
         transform.LookAt(lookAt.position);
 
-        //TargetLook();
+        TargetLook();
     }
 
     public void TargetLook()

@@ -28,7 +28,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").transform;
-        //agent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     private void Update()
