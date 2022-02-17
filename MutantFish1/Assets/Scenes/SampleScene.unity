@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 101557009}
   - component: {fileID: 101557008}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: EnemyDoll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1102,7 +1102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1079115191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1116,9 +1116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 4714064741967511350, guid: c05785c875e99204187c6e91e44bb6ce, type: 3}
-  startTime: 1
-  endTime: 5
-  spawnRate: 1
+  CountEnemy: 2
 --- !u!4 &1079115192
 Transform:
   m_ObjectHideFlags: 0
@@ -1127,7 +1125,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1079115190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.9327464, y: 4.253932, z: -4.109952}
+  m_LocalPosition: {x: 3.71, y: 4.253932, z: 7.48}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2716,6 +2714,7 @@ GameObject:
   - component: {fileID: 919132148251606469}
   - component: {fileID: 919132148251606471}
   - component: {fileID: 919132148251606472}
+  - component: {fileID: 919132148251606473}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -2786,6 +2785,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: 100
+--- !u!114 &919132148251606473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148251606468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ee12f930251eb41b74577fb96060b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashSpeed: 5
+  dashTime: 1.2
 --- !u!4 &1031632035244547363
 Transform:
   m_ObjectHideFlags: 0

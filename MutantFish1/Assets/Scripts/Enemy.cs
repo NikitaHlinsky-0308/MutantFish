@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
+        EnemyManager.instance.enemies.Add(this);
     }
 
     private void Update()
@@ -105,6 +106,11 @@ public class Enemy : MonoBehaviour
     private void DestroyEnemy()
     {
         Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        EnemyManager.instance.enemies.Remove(this);
     }
 
     private void OnDrawGizmosSelected()

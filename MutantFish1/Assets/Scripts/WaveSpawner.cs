@@ -4,25 +4,52 @@ using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
 {
+
     [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private float startTime, endTime, spawnRate;
+    [SerializeField] private int countEnemy;
+    [SerializeField] private float delay;
+
 
     void Start()
     {
-        InvokeRepeating("Spawn", startTime, spawnRate);
-        Invoke("CancelInvoke", endTime);
+
+        StartCoroutine(SpawnDelay(delay, countEnemy));
+
     }
 
-
-    
-    void Update()
-    {
-        
-    }
 
     private void Spawn()
     {
         Instantiate(enemyPrefab, transform.position, transform.rotation);
+    }
+
+    private IEnumerator SpawnDelay(float delay, int enemies)
+    {
+        for (int i = 0; i < enemies; i++)
+        {
+            //Debug.Log("Spawn success");
+            Spawn();
+            yield return new WaitForSeconds(delay);
+        }
+
+
+    }
+
+    public void NextWave()
+    {
+        StartCoroutine(SpawnDelay(delay, countEnemy));
+    }
+
+    public int CountEnemy
+    {
+        get 
+        {
+            return countEnemy;
+        }
+        set 
+        { 
+            countEnemy = value;
+        }
     }
 
 }

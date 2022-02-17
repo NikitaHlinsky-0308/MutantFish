@@ -18,31 +18,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        /*
-        float Horizontal = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
-        float Vertical = Input.GetAxis("Vertical") * speed * Time.deltaTime;
-
-        Vector3 Movement = cam.transform.right * Horizontal + cam.transform.forward * Vertical;
-        Movement.y = 0f;
-
-
-
-        controller.Move(Movement);
-        // weapon rotation 
-        gun.transform.localRotation = Quaternion.Euler(new Vector3(cam.transform.rotation.eulerAngles.x, 0, 0));
-        // player rotation, facing to the direction of camera watching
-        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * CameraMovement.instance.sensivity * Time.deltaTime);
-        
-        if (Movement.magnitude != 0f)
-        {
-            Quaternion CamRotation = cam.rotation;
-            CamRotation.x = 0f;
-            CamRotation.z = 0f;
-
-            transform.rotation = Quaternion.Lerp(transform.rotation, CamRotation, 0.1f);
-        } 
-        */
-
         float Horizontal = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         float Vertical = Input.GetAxis("Vertical") * speed * Time.deltaTime;
 
@@ -77,6 +52,17 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("VelocityZ", velocityZ);
     } 
 
+    public float Speed
+    {
+        get
+        {
+            return speed;
+        }
+        set
+        {
+            speed = value;
+        }
+    }
     
 
     /*
