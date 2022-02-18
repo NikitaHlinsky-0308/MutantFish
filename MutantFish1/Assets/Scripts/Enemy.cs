@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer;
 
-    public float health;
+    public float health = 1;
 
     //Patroling
     public Vector3 walkPoint;
@@ -30,6 +30,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
         EnemyManager.instance.enemies.Add(this);
+        //health = GetComponent<Life>();
     }
 
     private void Update()
@@ -99,9 +100,9 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
+        //health -= damage;
 
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
+        //if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
     }
     private void DestroyEnemy()
     {

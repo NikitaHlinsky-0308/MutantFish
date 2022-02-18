@@ -6,6 +6,7 @@ public class WaveSpawner : MonoBehaviour
 {
 
     [SerializeField] private GameObject enemyPrefab;
+    //[SerializeField] private List<GameObject> enemyPrefabs;
     [SerializeField] private int countEnemy;
     [SerializeField] private float delay;
 
@@ -14,6 +15,7 @@ public class WaveSpawner : MonoBehaviour
     {
 
         StartCoroutine(SpawnDelay(delay, countEnemy));
+        
 
     }
 
@@ -27,7 +29,6 @@ public class WaveSpawner : MonoBehaviour
     {
         for (int i = 0; i < enemies; i++)
         {
-            //Debug.Log("Spawn success");
             Spawn();
             yield return new WaitForSeconds(delay);
         }

@@ -7,7 +7,7 @@ public class WaveManager : MonoBehaviour
 
     public static WaveManager instance;
 
-    public List<WaveSpawner> waves;
+    public int waves = 1;
 
     private void Awake()
     {
