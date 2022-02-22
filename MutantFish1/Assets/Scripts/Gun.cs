@@ -11,9 +11,9 @@ public class Gun : MonoBehaviour
     private void Start()
     {
         firePoint = GameObject.FindGameObjectWithTag("FirePoint").transform;
-        if (firePoint != null)
+        if (firePoint == null)
         {
-            Debug.Log("fire point has been found");
+            Debug.Log("fire point has been not found");
         }
     }
 

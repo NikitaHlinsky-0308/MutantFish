@@ -22,7 +22,7 @@ public class PlayerDash : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift))
         {
             StartCoroutine(Dash());
-            Debug.Log("после корутины");
+            //Debug.Log("после корутины");
         }        
     }
 

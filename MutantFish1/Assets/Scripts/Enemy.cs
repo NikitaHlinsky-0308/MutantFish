@@ -1,4 +1,4 @@
-using UnityEngine.AI;
+﻿using UnityEngine.AI;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -9,7 +9,9 @@ public class Enemy : MonoBehaviour
 
     public LayerMask whatIsGround, whatIsPlayer;
 
-    public float health = 1;
+    public int health;
+    private int addittionHealth = 0;
+    private bool healthAlreadySet;
 
     //Patroling
     public Vector3 walkPoint;
@@ -31,6 +33,12 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         EnemyManager.instance.enemies.Add(this);
         //health = GetComponent<Life>();
+        //health = new Life(() => { /*Death*/});
+    }
+
+    private void Start()
+    {
+        //WaveHealthIncrease();
     }
 
     private void Update()
@@ -42,6 +50,8 @@ public class Enemy : MonoBehaviour
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
+
+        //WaveHealthIncrease();
     }
 
     private void Patroling()
@@ -100,9 +110,9 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        //health -= damage;
+        health -= damage;
 
-        //if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
+        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.1f);
     }
     private void DestroyEnemy()
     {
@@ -114,6 +124,45 @@ public class Enemy : MonoBehaviour
         EnemyManager.instance.enemies.Remove(this);
     }
 
+    public void WaveHealthIncrease()
+    {
+        //if (EnemyManager.instance.enemies.Count >= 2)
+        if (WaveManager.instance.waves % 5 == 0 ) // || WaveManager.instance.waves > 5)
+        { // первый иф работает на каждые 5 волн
+            /*
+                что нам надо от первого 
+                    увеличивать хп каждую пятую волну
+                    ставить хас в тру
+
+
+                
+                проблема - как держать увеличение хп после первого иф
+
+             */
+
+            healthAlreadySet = true;
+            EnemyManager.instance.AdditionHealth += 50;
+            print("called every 5 waves" + healthAlreadySet + addittionHealth);
+        } 
+        if (WaveManager.instance.waves >= 5 && healthAlreadySet == true)
+        {// второй работает последующие 5 и если установили has на тру
+            /*
+                что нам надо от второго 
+                    присваивать хп каждую волну после пятой 
+                    хас в фалс
+             
+             
+             
+             */
+            print("called once " + healthAlreadySet);
+
+            health = EnemyManager.instance.AdditionHealth;
+            //health += addittionHealth;
+            healthAlreadySet = false;
+            print("called once " + healthAlreadySet);
+        }  
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -121,4 +170,20 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, sightRange);
     }
+
+    public int Health
+    {
+        get
+        {
+            return health;
+        }
+        set 
+        {
+            health = value;
+        }
+    }
+
 }
+
+
+

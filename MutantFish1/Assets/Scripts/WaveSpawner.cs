@@ -6,17 +6,15 @@ public class WaveSpawner : MonoBehaviour
 {
 
     [SerializeField] private GameObject enemyPrefab;
-    //[SerializeField] private List<GameObject> enemyPrefabs;
+    [SerializeField] private List<GameObject> enemyPrefabs;
     [SerializeField] private int countEnemy;
+    //private int[] enemyCountArr = { 1, 2, 3, 4, 5 };
     [SerializeField] private float delay;
 
 
     void Start()
     {
-
         StartCoroutine(SpawnDelay(delay, countEnemy));
-        
-
     }
 
 
@@ -33,12 +31,24 @@ public class WaveSpawner : MonoBehaviour
             yield return new WaitForSeconds(delay);
         }
 
-
+        WaveManager.instance.SpawnFinished = true;
+        Debug.Log("Finish of spawn");
     }
 
     public void NextWave()
     {
+        ChangePrefab();
         StartCoroutine(SpawnDelay(delay, countEnemy));
+    }
+
+    private void ChangePrefab()
+    {
+        int waveCount = WaveManager.instance.waves;
+
+        if (waveCount >= 6)
+        {
+            enemyPrefab = enemyPrefabs[1];
+        }
     }
 
     public int CountEnemy
@@ -50,6 +60,12 @@ public class WaveSpawner : MonoBehaviour
         set 
         { 
             countEnemy = value;
+
+            if (countEnemy >= 5 || value >= 5)
+            {
+                print("setter if works");
+                countEnemy = 5;
+            }
         }
     }
 

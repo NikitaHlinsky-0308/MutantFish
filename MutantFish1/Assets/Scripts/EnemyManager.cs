@@ -7,6 +7,7 @@ public class EnemyManager : MonoBehaviour
     public static EnemyManager instance;
 
     public List<Enemy> enemies;
+    public int additionHealth = 100;
 
     private void Awake()
     {
@@ -20,6 +21,16 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
-
+    public int AdditionHealth
+    {
+        get
+        {
+            return additionHealth;
+        }
+        set
+        {
+            additionHealth = value;
+        }
+    }
 
 }

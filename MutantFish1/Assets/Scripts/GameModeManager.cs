@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameModeManager : MonoBehaviour
@@ -9,23 +8,23 @@ public class GameModeManager : MonoBehaviour
     [SerializeField] WaveSpawner Spawner;
     [SerializeField] private float WaveDelay;
     private bool corotineInProcess = false;
+    
+    
 
     void Update()
     {
 
         if (EnemyManager.instance.enemies.Count == 0 && corotineInProcess == false)
         {
+            WaveManager.instance.waves += 1;
             
-            if (WaveManager.instance.waves < 5)
+            if (WaveManager.instance.waves <= 5)
             {
-                Spawner.CountEnemy += 1;
-                WaveManager.instance.waves += 1;
+                Spawner.CountEnemy++;
                 
-            } else
-            {
-                
-                WaveManager.instance.waves += 1;
-            }
+            } 
+
+            
 
             StartCoroutine(NextWaveDelay(WaveDelay));
 
