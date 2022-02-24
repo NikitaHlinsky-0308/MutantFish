@@ -49,6 +49,33 @@ public class WaveSpawner : MonoBehaviour
         {
             enemyPrefab = enemyPrefabs[1];
         }
+        if (waveCount >= 11)
+        {
+            enemyPrefab = enemyPrefabs[2];
+        }
+        if (waveCount >= 16)
+        {
+            enemyPrefab = enemyPrefabs[3];
+        }
+        if (waveCount >= 21)
+        {
+            enemyPrefab = enemyPrefabs[4];
+        }
+        if (waveCount >= 26)
+        {
+            enemyPrefab = enemyPrefabs[5];
+        }
+        if (waveCount >= 31)
+        {
+            enemyPrefab = enemyPrefabs[6];
+        }
+        if (waveCount >= 36)
+        {
+            enemyPrefab = enemyPrefabs[7];
+        }
+        
+
+
     }
 
     public int CountEnemy

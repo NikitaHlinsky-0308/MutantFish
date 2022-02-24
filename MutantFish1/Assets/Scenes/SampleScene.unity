@@ -904,6 +904,7 @@ GameObject:
   - component: {fileID: 500128798}
   - component: {fileID: 500128797}
   - component: {fileID: 500128796}
+  - component: {fileID: 500128800}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -992,6 +993,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &500128800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500128795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5d03ed7dfcd81940b9c4ab2e0ebf6a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &645661302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,6 +1134,11 @@ MonoBehaviour:
   - {fileID: 4714064741967511350, guid: c05785c875e99204187c6e91e44bb6ce, type: 3}
   - {fileID: 4714064741967511350, guid: 30c98914bb51fa040b9b9bd38a039036, type: 3}
   - {fileID: 4714064741967511350, guid: 8029fe6f3f449e74cacdf62128d83159, type: 3}
+  - {fileID: 4714064741967511350, guid: 83c6a1dd329423f4cb07c4767e440b97, type: 3}
+  - {fileID: 4714064741967511350, guid: 62df9100362f06144a17925a35433bcc, type: 3}
+  - {fileID: 4714064741967511350, guid: 0264b061a86b6144e9a26311fb02b1d1, type: 3}
+  - {fileID: 4714064741967511350, guid: ba58d50c016fb1b4eb3daafe7b2a136b, type: 3}
+  - {fileID: 4714064741967511350, guid: 26e2b14c98ff75549a2d4d1b12e31ba6, type: 3}
   countEnemy: 1
   delay: 1
 --- !u!4 &1079115192
@@ -1751,6 +1769,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 481855566}
     m_Modifications:
     - target: {fileID: 1224747465, guid: dc7854f81219d4b46a5c3779fb932216, type: 3}
+      propertyPath: damage
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1224747465, guid: dc7854f81219d4b46a5c3779fb932216, type: 3}
       propertyPath: fireRate
       value: 0.1
       objectReference: {fileID: 0}
@@ -2078,6 +2100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 547107257924486167, guid: c0d0c8498b6856b46bf53ef18c8d12af, type: 3}
   fireRate: 0.5
+  damage: 0
 --- !u!1 &1576393903
 GameObject:
   m_ObjectHideFlags: 0

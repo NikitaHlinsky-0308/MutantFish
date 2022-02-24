@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4714064741967511345}
   - component: {fileID: 6482113409953648301}
   m_Layer: 0
-  m_Name: BasicEnemy2
+  m_Name: BasicEnemy6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,7 +119,7 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
-  health: 250
+  health: 450
   walkPoint: {x: 0, y: 0, z: 0}
   walkPointRange: 3
   timeBetweenAttacks: 2

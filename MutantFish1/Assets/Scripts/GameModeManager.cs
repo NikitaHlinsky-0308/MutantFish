@@ -17,7 +17,7 @@ public class GameModeManager : MonoBehaviour
         if (EnemyManager.instance.enemies.Count == 0 && corotineInProcess == false)
         {
             WaveManager.instance.waves += 1;
-            
+            WaveManager.instance.UpdateUI();
             if (WaveManager.instance.waves <= 5)
             {
                 Spawner.CountEnemy++;

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - FirePoint
+  - Weapon
   layers:
   - Default
   - TransparentFX

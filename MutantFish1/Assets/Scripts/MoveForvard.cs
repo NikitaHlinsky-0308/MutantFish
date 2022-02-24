@@ -5,14 +5,14 @@ using UnityEngine;
 public class MoveForvard : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] private int damage;
-    //private ContactDamage ContDmg;
+    
+    private Gun weapon;
     private Vector3 lastPos;
 
     private void Start()
     {
         lastPos = transform.position;
-        //ContDmg = GetComponent<ContactDamage>();
+        weapon = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Gun>();
     }
 
     void Update()
@@ -26,7 +26,6 @@ public class MoveForvard : MonoBehaviour
         {
 
             DamageDeal(hit);
-            //ContDmg.DamageDeal(hit);
             Destroy(gameObject);
         }
         lastPos = transform.position;
@@ -39,10 +38,10 @@ public class MoveForvard : MonoBehaviour
         Enemy enemy = hit.transform.GetComponent<Enemy>();
         if (enemy != null)
         {
-            enemy.TakeDamage(damage);
+            enemy.TakeDamage(weapon.Damage);
         }
     }
     
-
+    
     
 }

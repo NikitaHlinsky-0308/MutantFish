@@ -4,6 +4,7 @@ public class Gun : MonoBehaviour
 {
     [SerializeField] private GameObject prefab;
     [SerializeField] private float fireRate;
+    [SerializeField] private int damage;
     private Transform firePoint;
     private float nextFire = 0f;
 
@@ -27,5 +28,32 @@ public class Gun : MonoBehaviour
 
             Instantiate(prefab, firePoint.position, firePoint.rotation);
         }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            //UpgradeWeaponFireRate();
+            UpgradeWeaponDamage();
+        }
+    }
+
+    public int Damage
+    {
+        get
+        {
+            return damage;
+        }
+        set
+        {
+            damage = value;
+        }
+    }
+
+    public void UpgradeWeaponFireRate()
+    {
+        fireRate += 0.3f;
+    }
+
+    public void UpgradeWeaponDamage()
+    {
+        damage += 50;
     }
 }

@@ -29,6 +29,11 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        UpdateUI();
+    }
+
     public bool SpawnFinished
     {
         get
@@ -93,5 +98,10 @@ public class WaveManager : MonoBehaviour
 
             SpawnFinished = false;
         }
+    }
+
+    public void UpdateUI()
+    {
+        UImanager.instance.waves.text = waves.ToString();
     }
 }
