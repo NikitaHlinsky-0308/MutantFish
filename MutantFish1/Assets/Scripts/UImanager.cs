@@ -8,6 +8,7 @@ public class UImanager : MonoBehaviour
     public static UImanager instance;
 
     public Text waves;
+    public Image blackScreen;
 
     private void Awake()
     {
