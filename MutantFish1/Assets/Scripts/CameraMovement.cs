@@ -27,12 +27,6 @@ public class CameraMovement : MonoBehaviour
         instance = this;
     }
 
-    void Start()
-    {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
-    }
 
 
     void Update()
@@ -66,5 +60,18 @@ public class CameraMovement : MonoBehaviour
             targetLook.position = Vector3.Lerp(targetLook.position, targetLook.transform.forward * 150, Time.deltaTime);
         }
      
+    }
+
+    public void AjustSens()
+    {
+        Sensivity = UImanager.instance.sensSlider.value;
+    }
+
+    public float Sensivity
+    {
+        set
+        {
+            sensivity = value;
+        }
     }
 }

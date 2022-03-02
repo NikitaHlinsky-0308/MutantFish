@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     public LayerMask whatIsGround, whatIsPlayer;
 
     public int health;
-    private int addittionHealth = 0;
+    //private int addittionHealth = 0;
     private bool healthAlreadySet;
 
     //Patroling
@@ -124,44 +124,6 @@ public class Enemy : MonoBehaviour
         EnemyManager.instance.enemies.Remove(this);
     }
 
-    public void WaveHealthIncrease()
-    {
-        //if (EnemyManager.instance.enemies.Count >= 2)
-        if (WaveManager.instance.waves % 5 == 0 ) // || WaveManager.instance.waves > 5)
-        { // первый иф работает на каждые 5 волн
-            /*
-                что нам надо от первого 
-                    увеличивать хп каждую пятую волну
-                    ставить хас в тру
-
-
-                
-                проблема - как держать увеличение хп после первого иф
-
-             */
-
-            healthAlreadySet = true;
-            EnemyManager.instance.AdditionHealth += 50;
-            print("called every 5 waves" + healthAlreadySet + addittionHealth);
-        } 
-        if (WaveManager.instance.waves >= 5 && healthAlreadySet == true)
-        {// второй работает последующие 5 и если установили has на тру
-            /*
-                что нам надо от второго 
-                    присваивать хп каждую волну после пятой 
-                    хас в фалс
-             
-             
-             
-             */
-            print("called once " + healthAlreadySet);
-
-            health = EnemyManager.instance.AdditionHealth;
-            //health += addittionHealth;
-            healthAlreadySet = false;
-            print("called once " + healthAlreadySet);
-        }  
-    }
 
     private void OnDrawGizmosSelected()
     {

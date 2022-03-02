@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    public static PlayerMovement instance;
+
     [SerializeField] private CharacterController controller;
     [SerializeField] private float speed;
     [SerializeField] private Transform cam, gun;
@@ -12,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        instance = this;
         anim = GetComponent<Animator>();
     }
 
