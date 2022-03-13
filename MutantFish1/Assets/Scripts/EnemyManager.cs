@@ -6,7 +6,7 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager instance;
 
-    public List<Enemy> enemies;
+    public List<EnemyController> enemies;
     public int additionHealth = 100;
 
     private void Awake()

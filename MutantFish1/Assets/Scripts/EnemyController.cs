@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyControllerTest : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
 
     public NavMeshAgent agent;
@@ -20,15 +20,13 @@ public class EnemyControllerTest : MonoBehaviour
     public float timeBetweenAttacks = 2f;
     private float attackCounter;
 
-
+    [SerializeField] private int damage;
+    [SerializeField] private int health;
 
     void Start()
     {
-        
+        EnemyManager.instance.enemies.Add(this);
     }
-
- 
-
 
     void Update()
     {
@@ -39,7 +37,7 @@ public class EnemyControllerTest : MonoBehaviour
             case AIState.isIdle:
                 anim.SetBool("Moving", false);
 
-                if(distanceToPlayer <= 10)
+                if(distanceToPlayer <= chaseRange)
                 {
                     currentState = AIState.isChasing;
                     anim.SetBool("Moving", true);
@@ -95,4 +93,16 @@ public class EnemyControllerTest : MonoBehaviour
                 break;
         }
     }
+
+    private void OnDestroy()
+    {
+        EnemyManager.instance.enemies.Remove(this);
+    }
+
+    public void TakeDamage(int amount)
+    {
+        health -= amount;
+        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.1f);
+    }
+    private void DestroyEnemy() { Destroy(gameObject); }
 }

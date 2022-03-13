@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UImanager : MonoBehaviour
@@ -8,19 +7,24 @@ public class UImanager : MonoBehaviour
     public static UImanager instance;
 
     public Text waves;
+    public Text healthCount;
     public GameObject pauseMenu;
     public GameObject optionsScreen;
     public GameObject inGameUI;
     public Slider sensSlider;
     public GameObject upgradePanel;
-    
+    public GameObject GameOverPanel;
+    public Text waveNumber;
+    public Scene scene;
+
 
     private void Awake()
     {
         instance = this;
+        scene = SceneManager.GetActiveScene();
     }
 
-    /*
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.I))
@@ -29,7 +33,7 @@ public class UImanager : MonoBehaviour
         }
     }
      
-     */
+    
 
     public void Resume()
     {
@@ -64,6 +68,12 @@ public class UImanager : MonoBehaviour
     public void Quit()
     {
 
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadSceneAsync(0);
+        Time.timeScale = 1f;
     }
     
 

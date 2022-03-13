@@ -5,7 +5,7 @@ public class GameModeManager : MonoBehaviour
 {
     public static GameModeManager instance;
 
-    [SerializeField] Life PlayerLife;
+   
     [SerializeField] WaveSpawner Spawner;
     [SerializeField] private float WaveDelay;
     private bool corotineInProcess = false;
@@ -43,10 +43,22 @@ public class GameModeManager : MonoBehaviour
 
             StartCoroutine(NextWaveDelay(WaveDelay));
 
-        } else if (PlayerLife.amount <= 0)
+        } else if (PlayerMovement.instance.Health <= 0)
         {
-            print("Lose");
-        }
+
+            if (!UImanager.instance.GameOverPanel.activeInHierarchy)
+            {
+                UImanager.instance.inGameUI.SetActive(false);
+                UImanager.instance.GameOverPanel.SetActive(true);
+
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+
+                Time.timeScale = 0f;
+            }
+
+            
+        } 
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {

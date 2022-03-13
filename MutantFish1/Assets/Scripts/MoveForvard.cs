@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveForvard : MonoBehaviour
@@ -35,9 +33,10 @@ public class MoveForvard : MonoBehaviour
 
     private void DamageDeal(RaycastHit hit)
     {
-        Enemy enemy = hit.transform.GetComponent<Enemy>();
+        EnemyController enemy = hit.transform.GetComponent<EnemyController>();
         if (enemy != null)
         {
+            print('1');
             enemy.TakeDamage(weapon.Damage);
         }
     }

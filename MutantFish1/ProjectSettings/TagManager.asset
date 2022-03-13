@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FirePoint
   - Weapon
+  - OxySupplier
   layers:
   - Default
   - TransparentFX

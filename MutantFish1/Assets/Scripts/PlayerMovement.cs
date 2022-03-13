@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -10,6 +8,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private CharacterController controller;
     [SerializeField] private float speed;
     [SerializeField] private Transform cam, gun;
+    [SerializeField] private int health = 2;
+
+    [SerializeField] private float oxygenAmount;
+    [SerializeField] private float oxygenReducingRate;
+    [SerializeField] private float oxygenIncreaseRate;
+    private float currentOxygen;
+
 
     Animator anim;
 
@@ -19,14 +24,21 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    private void Start()
+    {
+        currentOxygen = oxygenAmount;
+        UpdateUI();
+    }
 
     void Update()
     {
+        SubtrackOxygen(oxygenReducingRate * Time.deltaTime);
+       
+
         float Horizontal = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         float Vertical = Input.GetAxis("Vertical") * speed * Time.deltaTime;
 
         Vector3 Movement = cam.transform.right * Horizontal + cam.transform.forward * Vertical;
-        //Vector3 Movement = new Vector3(Vertical, 0.0f, Horizontal);
         Movement.y = 0f;
 
         gun.transform.localRotation = Quaternion.Euler(new Vector3(cam.transform.rotation.eulerAngles.x, 0, 0));
@@ -43,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
+
         Movement.Normalize();
         LocomotionAnim();
     }
@@ -54,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
 
         anim.SetFloat("VelocityX", velocityX);
         anim.SetFloat("VelocityZ", velocityZ);
-    } 
+    }
 
     public float Speed
     {
@@ -67,8 +80,58 @@ public class PlayerMovement : MonoBehaviour
             speed = value;
         }
     }
-    
 
+    public int Health
+    {
+        get
+        {
+            return health;
+        }
+        set
+        {
+            health = value;
+        }
+    }
+
+    public void UpdateUI()
+    {
+        UImanager.instance.healthCount.text = health.ToString();
+    }
+
+
+    public void AddOxygen(float amount)
+    {
+        currentOxygen = Mathf.Min(currentOxygen + amount, oxygenAmount);
+    }
+
+    public void SubtrackOxygen(float amount)
+    {
+        currentOxygen = Mathf.Max(currentOxygen - amount, 0);
+    }
+
+    /*
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "OxySupplier")
+        {
+            AddOxygen(oxygenIncreaseRate * Time.deltaTime);
+            print("triggered");
+        } 
+    }
+     
+     */
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "OxySupplier")
+        {
+            AddOxygen(oxygenIncreaseRate * Time.deltaTime);
+            print("triggered");
+        }
+    }
+
+
+}
     /*
     
     private void Update()
@@ -165,4 +228,4 @@ public class PlayerMovement : MonoBehaviour
      
      */
 
-}
+

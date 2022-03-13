@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
     {
         player = GameObject.FindWithTag("Player").transform;
         agent = GetComponent<NavMeshAgent>();
-        EnemyManager.instance.enemies.Add(this);
+        //EnemyManager.instance.enemies.Add(this);
         //health = GetComponent<Life>();
         //health = new Life(() => { /*Death*/});
     }
@@ -121,7 +121,7 @@ public class Enemy : MonoBehaviour
 
     private void OnDestroy()
     {
-        EnemyManager.instance.enemies.Remove(this);
+        //EnemyManager.instance.enemies.Remove(this);
     }
 
 

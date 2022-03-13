@@ -1,0 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class OxygenNeed : MonoBehaviour
+{
+    [SerializeField] private float oxygenAmount;
+    private float currentOxygen;
+
+
+
+    void Start()
+    {
+        currentOxygen = oxygenAmount;
+    }
+
+    
+    void Update()
+    {
+        SubtrackOxygen(2f * Time.deltaTime);
+        print(currentOxygen);
+    }
+
+    public void AddOxygen(float amount)
+    {
+        currentOxygen = Mathf.Min(currentOxygen + amount, oxygenAmount);
+    }
+
+    public void SubtrackOxygen(float amount)
+    {
+        currentOxygen = Mathf.Max(currentOxygen - amount, 0);
+    }
+}
