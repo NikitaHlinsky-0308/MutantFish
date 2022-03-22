@@ -6,15 +6,15 @@ public class UImanager : MonoBehaviour
 {
     public static UImanager instance;
 
-    public Text waves;
-    public Text healthCount;
+    public Text score;
+    public Image healthImage;
     public GameObject pauseMenu;
     public GameObject optionsScreen;
     public GameObject inGameUI;
     public Slider sensSlider;
     public GameObject upgradePanel;
     public GameObject GameOverPanel;
-    public Text waveNumber;
+    public Slider oxygenSlider;
     public Scene scene;
 
 
@@ -22,6 +22,7 @@ public class UImanager : MonoBehaviour
     {
         instance = this;
         scene = SceneManager.GetActiveScene();
+        
     }
 
     

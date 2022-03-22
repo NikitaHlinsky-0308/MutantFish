@@ -23,10 +23,6 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private int damage;
     [SerializeField] private int health;
 
-    void Start()
-    {
-        EnemyManager.instance.enemies.Add(this);
-    }
 
     void Update()
     {
@@ -96,7 +92,13 @@ public class EnemyController : MonoBehaviour
 
     private void OnDestroy()
     {
-        EnemyManager.instance.enemies.Remove(this);
+        if (EnemyManager.instance != null)
+        {
+            EnemyManager.instance.AddScore(100);
+            EnemyManager.instance.UpdateUI();
+        }
+
+        // drop collectable chance here
     }
 
     public void TakeDamage(int amount)

@@ -5,12 +5,6 @@ public class GameModeManager : MonoBehaviour
 {
     public static GameModeManager instance;
 
-   
-    [SerializeField] WaveSpawner Spawner;
-    [SerializeField] private float WaveDelay;
-    private bool corotineInProcess = false;
-
-
     private void Awake()
     {
         if(instance == null)
@@ -28,22 +22,8 @@ public class GameModeManager : MonoBehaviour
 
     void Update()
     {
-
-        if (EnemyManager.instance.enemies.Count == 0 && corotineInProcess == false)
-        {
-            WaveManager.instance.waves += 1;
-            WaveManager.instance.UpdateUI();
-            if (WaveManager.instance.waves <= 5)
-            {
-                Spawner.CountEnemy++;
-                
-            } 
-
-            
-
-            StartCoroutine(NextWaveDelay(WaveDelay));
-
-        } else if (PlayerMovement.instance.Health <= 0)
+        
+        if (PlayerMovement.instance.Health <= 0)
         {
 
             if (!UImanager.instance.GameOverPanel.activeInHierarchy)
@@ -64,14 +44,6 @@ public class GameModeManager : MonoBehaviour
         {
             PauseUnpause();
         }
-    }
-
-    IEnumerator NextWaveDelay(float delay)
-    {
-        corotineInProcess = true;
-        yield return new WaitForSeconds(delay);
-        Spawner.NextWave();
-        corotineInProcess = false;
     }
 
     public void PauseUnpause()

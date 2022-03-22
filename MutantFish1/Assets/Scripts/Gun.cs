@@ -5,7 +5,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private GameObject prefab;
     [SerializeField] private float fireRate;
     [SerializeField] private int damage;
-    private Transform firePoint;
+    [SerializeField] private Transform firePoint;
     private float nextFire = 0f;
 
 

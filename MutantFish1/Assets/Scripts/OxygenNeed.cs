@@ -18,6 +18,7 @@ public class OxygenNeed : MonoBehaviour
     void Update()
     {
         SubtrackOxygen(2f * Time.deltaTime);
+        //UpdateUI();
         print(currentOxygen);
     }
 
@@ -29,5 +30,10 @@ public class OxygenNeed : MonoBehaviour
     public void SubtrackOxygen(float amount)
     {
         currentOxygen = Mathf.Max(currentOxygen - amount, 0);
+    }
+
+    private void UpdateUI()
+    {
+        UImanager.instance.oxygenSlider.value = oxygenAmount;
     }
 }

@@ -1,3 +1,5 @@
+using System.Collections;
+//using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -9,17 +11,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Transform cam, gun;
     [SerializeField] private int health = 2;
+    [SerializeField] private Sprite[] healthBarImages;
 
     [SerializeField] private float oxygenAmount;
     [SerializeField] private float oxygenReducingRate;
     [SerializeField] private float oxygenIncreaseRate;
     private float currentOxygen;
-
+    private Gun weapon;
 
     Animator anim;
 
     private void Awake()
     {
+        weapon = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Gun>();
         instance = this;
         anim = GetComponent<Animator>();
     }
@@ -33,7 +37,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         SubtrackOxygen(oxygenReducingRate * Time.deltaTime);
-       
+        UpdateOxygenUI();
+
 
         float Horizontal = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         float Vertical = Input.GetAxis("Vertical") * speed * Time.deltaTime;
@@ -47,6 +52,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (Movement.magnitude != 0f)
         {
+            Movement.Normalize();
+
             Quaternion CamRotation = cam.rotation;
             CamRotation.x = 0f;
             CamRotation.z = 0f;
@@ -56,7 +63,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        Movement.Normalize();
         LocomotionAnim();
     }
 
@@ -65,8 +71,8 @@ public class PlayerMovement : MonoBehaviour
         float velocityZ = Input.GetAxis("Vertical");
         float velocityX = Input.GetAxis("Horizontal");
 
-        anim.SetFloat("VelocityX", velocityX);
-        anim.SetFloat("VelocityZ", velocityZ);
+        anim.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
+        anim.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
     }
 
     public float Speed
@@ -95,9 +101,27 @@ public class PlayerMovement : MonoBehaviour
 
     public void UpdateUI()
     {
-        UImanager.instance.healthCount.text = health.ToString();
+        UImanager.instance.oxygenSlider.value = currentOxygen;
+
+        switch (health)
+        {
+            case 0:
+                UImanager.instance.healthImage.sprite = healthBarImages[0];
+                break;
+            case 1:
+                UImanager.instance.healthImage.sprite = healthBarImages[1];
+                break;
+            case 2:
+                UImanager.instance.healthImage.sprite = healthBarImages[2];
+                break;
+        }
+
     }
 
+    public void UpdateOxygenUI()
+    {
+        UImanager.instance.oxygenSlider.value = currentOxygen;
+    }
 
     public void AddOxygen(float amount)
     {
@@ -109,17 +133,27 @@ public class PlayerMovement : MonoBehaviour
         currentOxygen = Mathf.Max(currentOxygen - amount, 0);
     }
 
-    /*
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "OxySupplier")
+
+        switch (other.tag)
         {
-            AddOxygen(oxygenIncreaseRate * Time.deltaTime);
-            print("triggered");
-        } 
+            case "DamageBuff":
+                StartCoroutine(DamageBuff(3));
+                Destroy(other.gameObject);
+                break;
+
+            case "HealthBuff":
+                Health = 2;
+                UpdateUI();
+                Destroy(other.gameObject);
+                break;
+
+            case "ProtectionBuff":
+                //StartCoroutine();
+                break;
+        }
     }
-     
-     */
 
     private void OnTriggerStay(Collider other)
     {
@@ -130,6 +164,23 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    IEnumerator DamageBuff(float amount)
+    {
+        int defaultDmg = weapon.Damage;
+        weapon.Damage = weapon.Damage * 4;
+
+        yield return new WaitForSeconds(amount);
+        
+        weapon.Damage = defaultDmg;
+    }
+    IEnumerator ProtectionBuff(float amount)
+    {
+        
+
+        yield return new WaitForSeconds(amount);
+
+        
+    }
 
 }
     /*

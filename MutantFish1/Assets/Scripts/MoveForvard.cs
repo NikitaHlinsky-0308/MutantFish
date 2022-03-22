@@ -36,7 +36,6 @@ public class MoveForvard : MonoBehaviour
         EnemyController enemy = hit.transform.GetComponent<EnemyController>();
         if (enemy != null)
         {
-            print('1');
             enemy.TakeDamage(weapon.Damage);
         }
     }

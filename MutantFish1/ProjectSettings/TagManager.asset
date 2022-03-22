@@ -7,6 +7,9 @@ TagManager:
   - FirePoint
   - Weapon
   - OxySupplier
+  - DamageBuff
+  - HealthBuff
+  - ProtectionBuff
   layers:
   - Default
   - TransparentFX

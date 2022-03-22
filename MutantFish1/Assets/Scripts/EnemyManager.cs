@@ -1,13 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager instance;
 
-    public List<EnemyController> enemies;
-    public int additionHealth = 100;
+    [SerializeField] private GameObject spawnee;
+    [SerializeField] private GameObject[] spawnPoints;
+    [SerializeField] private bool stopSpawn = false;
+    [SerializeField] private float spawnTime;
+    [SerializeField] private float spawnDelay;
+
+    private int nextPositionPoint = 0;
+    private int score;
+
 
     private void Awake()
     {
@@ -17,20 +22,37 @@ public class EnemyManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Enemy manager duplicated", gameObject);
+            Debug.LogError("Waves spawner duplicated", gameObject);
         }
     }
 
-    public int AdditionHealth
+    void Start()
     {
-        get
+        InvokeRepeating("SpawnObjects", spawnTime, spawnDelay);
+    }
+
+    public void SpawnObjects()
+    {
+        nextPositionPoint = Random.Range(0, spawnPoints.Length);
+        //print(nextPositionPoint);
+        Instantiate(spawnee, spawnPoints[nextPositionPoint].transform.position, transform.rotation);
+        if (stopSpawn)
         {
-            return additionHealth;
-        }
-        set
-        {
-            additionHealth = value;
+            CancelInvoke("SpawnObjects");
         }
     }
 
+    public void UpdateUI()
+    {
+        if (UImanager.instance.score != null)
+        {
+            UImanager.instance.score.text = score.ToString();
+        }
+
+    }
+
+    public void AddScore(int amount)
+    {
+        score += amount;
+    }
 }
