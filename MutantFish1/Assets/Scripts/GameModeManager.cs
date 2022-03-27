@@ -15,9 +15,10 @@ public class GameModeManager : MonoBehaviour
 
     void Start()
     {
+        /*
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
+         */
     }
 
     void Update()
@@ -31,8 +32,11 @@ public class GameModeManager : MonoBehaviour
                 UImanager.instance.inGameUI.SetActive(false);
                 UImanager.instance.GameOverPanel.SetActive(true);
 
+                /*
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
+                 */
+
 
                 Time.timeScale = 0f;
             }
@@ -54,9 +58,10 @@ public class GameModeManager : MonoBehaviour
             Time.timeScale = 1.0f;
 
             UImanager.instance.inGameUI.SetActive(true);
-
+            /*
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+             */
         } else
         {
             UImanager.instance.pauseMenu.SetActive(true);
@@ -66,8 +71,10 @@ public class GameModeManager : MonoBehaviour
             UImanager.instance.inGameUI.SetActive(false);
             UImanager.instance.CloseOptions();
 
+            /*
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+             */
         }
     }
 

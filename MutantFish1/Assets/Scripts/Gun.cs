@@ -6,15 +6,16 @@ public class Gun : MonoBehaviour
     [SerializeField] private float fireRate;
     [SerializeField] private int damage;
     [SerializeField] private Transform firePoint;
+    [SerializeField] private FixedButton fireButton;
     private float nextFire = 0f;
 
 
     private void Start()
     {
-        firePoint = GameObject.FindGameObjectWithTag("FirePoint").transform;
+        //firePoint = GameObject.FindGameObjectWithTag("FirePoint").transform;
         if (firePoint == null)
         {
-            Debug.Log("fire point has been not found");
+            Debug.LogError("Fire point has been not found");
         }
     }
 
@@ -22,7 +23,9 @@ public class Gun : MonoBehaviour
     {
         firePoint.LookAt(CameraMovement.instance.targetLook);
 
-        if (Input.GetKey(KeyCode.Mouse0) && Time.time > nextFire)
+        //if (Input.GetKey(KeyCode.Mouse0) && Time.time > nextFire)
+        
+        if (fireButton.Pressed && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
 

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -6,10 +7,12 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] private GameObject spawnee;
     [SerializeField] private GameObject[] spawnPoints;
-    [SerializeField] private bool stopSpawn = false;
+    //[SerializeField] private bool stopSpawn = false;
     [SerializeField] private float spawnTime;
     [SerializeField] private float spawnDelay;
 
+    private int enemyCount;
+    //private bool alreadyCalled = true;
     private int nextPositionPoint = 0;
     private int score;
 
@@ -34,12 +37,16 @@ public class EnemyManager : MonoBehaviour
     public void SpawnObjects()
     {
         nextPositionPoint = Random.Range(0, spawnPoints.Length);
-        //print(nextPositionPoint);
+        
         Instantiate(spawnee, spawnPoints[nextPositionPoint].transform.position, transform.rotation);
+        
+        /*
         if (stopSpawn)
         {
             CancelInvoke("SpawnObjects");
         }
+         
+         */
     }
 
     public void UpdateUI()
@@ -55,4 +62,18 @@ public class EnemyManager : MonoBehaviour
     {
         score += amount;
     }
+
+    public int EnemyCount
+    {
+        get
+        {
+            return enemyCount;
+        }
+        set
+        {
+            enemyCount = value;
+        }
+    }
+
+    
 }

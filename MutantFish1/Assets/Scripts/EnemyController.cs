@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
@@ -20,13 +19,14 @@ public class EnemyController : MonoBehaviour
     public float timeBetweenAttacks = 2f;
     private float attackCounter;
 
-    [SerializeField] private int damage;
     [SerializeField] private int health;
-
+    [SerializeField] private int buffChance;
+        
 
     void Update()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, PlayerMovement.instance.transform.position);
+        
 
         switch (currentState)
         {
@@ -90,21 +90,42 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+
+    public void TakeDamage(int amount)
     {
+        health -= amount;
+        if (health <= 0)
+        {
+            //EnemyManager.instance.EnemyCount--;
+            EnemyManager.instance.EnemyCount += 1;
+            Invoke(nameof(DestroyEnemy), 0.1f);
+        }
+    }
+    private void DestroyEnemy() {
+
+
         if (EnemyManager.instance != null)
         {
             EnemyManager.instance.AddScore(100);
             EnemyManager.instance.UpdateUI();
         }
 
-        // drop collectable chance here
+        if (Random.Range(1, 101) <= buffChance && SpawnCollectables.instance != null)
+        {
+            
+            SpawnCollectables.instance.SpawnItem(Random.Range(0, 3), transform.position);
+        }
+
+
+        StartCoroutine(DelayBeforeDie(0.75f));
+
     }
 
-    public void TakeDamage(int amount)
+    private IEnumerator DelayBeforeDie(float delay)
     {
-        health -= amount;
-        if (health <= 0) Invoke(nameof(DestroyEnemy), 0.1f);
-    }
-    private void DestroyEnemy() { Destroy(gameObject); }
+        anim.SetTrigger("Die");
+        yield return new WaitForSeconds(delay);
+
+        Destroy(gameObject);
+    } 
 }

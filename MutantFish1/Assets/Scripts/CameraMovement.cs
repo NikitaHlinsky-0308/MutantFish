@@ -16,6 +16,10 @@ public class CameraMovement : MonoBehaviour
     public Transform targetLook;
 
 
+    //private Vector2 lookAxis;
+    //public FloatingJoystick lookJoystick;
+    public FixedTouchField touchField;
+
     private float currentX = 0.0f, currentY = 0.0f;
     public float sensivity;
     
@@ -32,8 +36,15 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
 
+        /*
+        // mouse input
         currentX += Input.GetAxis("Mouse X") * sensivity * Time.deltaTime;
         currentY += Input.GetAxis("Mouse Y") * sensivity * Time.deltaTime;
+         */
+
+        
+        currentX += touchField.TouchDist.x * sensivity * Time.deltaTime;
+        currentY += -touchField.TouchDist.y * sensivity * Time.deltaTime;
 
         currentY = Mathf.Clamp(currentY, YMin, YMax);
 

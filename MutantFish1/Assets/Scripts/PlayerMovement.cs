@@ -1,5 +1,4 @@
 using System.Collections;
-//using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -8,7 +7,12 @@ public class PlayerMovement : MonoBehaviour
     public static PlayerMovement instance;
 
     [SerializeField] private CharacterController controller;
+    [SerializeField] private Vector2 moveAxis;
+    [SerializeField] private FloatingJoystick moveJoystick;
+
+
     [SerializeField] private float speed;
+    [SerializeField] private float gravityScale;
     [SerializeField] private Transform cam, gun;
     [SerializeField] private int health = 2;
     [SerializeField] private Sprite[] healthBarImages;
@@ -16,22 +20,27 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float oxygenAmount;
     [SerializeField] private float oxygenReducingRate;
     [SerializeField] private float oxygenIncreaseRate;
+    [SerializeField] private Gun weapon;
     private float currentOxygen;
-    private Gun weapon;
 
     Animator anim;
 
-    private void Awake()
-    {
-        weapon = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Gun>();
-        instance = this;
-        anim = GetComponent<Animator>();
-    }
 
     private void Start()
     {
+        weapon = GetComponent<Gun>();
+        instance = this;
+        anim = GetComponent<Animator>();
         currentOxygen = oxygenAmount;
         UpdateUI();
+    }
+
+    private void LateUpdate()
+    {
+        if (currentOxygen <= 0)
+        {
+            Health = 0;
+        }
     }
 
     void Update()
@@ -39,16 +48,24 @@ public class PlayerMovement : MonoBehaviour
         SubtrackOxygen(oxygenReducingRate * Time.deltaTime);
         UpdateOxygenUI();
 
-
+        /*
+         // keyboard input
         float Horizontal = Input.GetAxis("Horizontal") * speed * Time.deltaTime;
         float Vertical = Input.GetAxis("Vertical") * speed * Time.deltaTime;
+         */
+
+        // touch input
+        float Horizontal = moveJoystick.Horizontal * speed * Time.deltaTime;
+        float Vertical = moveJoystick.Vertical * speed * Time.deltaTime;
 
         Vector3 Movement = cam.transform.right * Horizontal + cam.transform.forward * Vertical;
         Movement.y = 0f;
 
         gun.transform.localRotation = Quaternion.Euler(new Vector3(cam.transform.rotation.eulerAngles.x, 0, 0));
-        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * CameraMovement.instance.sensivity * Time.deltaTime);
+        //transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * CameraMovement.instance.sensivity * Time.deltaTime);
+        transform.Rotate(Vector3.up * CameraMovement.instance.touchField.TouchDist.x * CameraMovement.instance.sensivity * Time.deltaTime);
         controller.Move(Movement);
+        Movement.y += Physics.gravity.y * Time.deltaTime * gravityScale;
 
         if (Movement.magnitude != 0f)
         {
@@ -68,8 +85,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void LocomotionAnim()
     {
+        /*
+         // keyboard 
         float velocityZ = Input.GetAxis("Vertical");
         float velocityX = Input.GetAxis("Horizontal");
+         */
+
+        float velocityZ = moveJoystick.Vertical;
+        float velocityX = moveJoystick.Horizontal;
 
         anim.SetFloat("VelocityX", velocityX, 0.1f, Time.deltaTime);
         anim.SetFloat("VelocityZ", velocityZ, 0.1f, Time.deltaTime);
@@ -150,7 +173,8 @@ public class PlayerMovement : MonoBehaviour
                 break;
 
             case "ProtectionBuff":
-                //StartCoroutine();
+                StartCoroutine(ProtectionBuff(5));
+                Destroy(other.gameObject);
                 break;
         }
     }
@@ -160,7 +184,7 @@ public class PlayerMovement : MonoBehaviour
         if (other.tag == "OxySupplier")
         {
             AddOxygen(oxygenIncreaseRate * Time.deltaTime);
-            print("triggered");
+            //print("triggered");
         }
     }
 
@@ -175,11 +199,12 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator ProtectionBuff(float amount)
     {
-        
+        int earlyHpState = Health;
+        Health = 99999;
 
         yield return new WaitForSeconds(amount);
 
-        
+        health = earlyHpState;
     }
 
 }

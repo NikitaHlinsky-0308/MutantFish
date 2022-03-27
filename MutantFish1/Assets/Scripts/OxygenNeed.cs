@@ -7,20 +7,15 @@ public class OxygenNeed : MonoBehaviour
     [SerializeField] private float oxygenAmount;
     private float currentOxygen;
 
+    void Start() => currentOxygen = oxygenAmount;
 
-
-    void Start()
-    {
-        currentOxygen = oxygenAmount;
-    }
-
-    
-    void Update()
+    void LateUpdate()
     {
         SubtrackOxygen(2f * Time.deltaTime);
-        //UpdateUI();
-        print(currentOxygen);
+       
     }
+
+
 
     public void AddOxygen(float amount)
     {
