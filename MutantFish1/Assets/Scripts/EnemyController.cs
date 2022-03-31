@@ -97,7 +97,7 @@ public class EnemyController : MonoBehaviour
         if (health <= 0)
         {
             //EnemyManager.instance.EnemyCount--;
-            EnemyManager.instance.EnemyCount += 1;
+            //EnemyManager.instance.EnemyCount += 1;
             Invoke(nameof(DestroyEnemy), 0.1f);
         }
     }

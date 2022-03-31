@@ -17,25 +17,40 @@ public class WormEnemyController : MonoBehaviour
     public float attackRange = 1f;
     public float timeBetweenAttacks = 2f;
     private float attackCounter;
+    private float defaultSpeed;
 
     [SerializeField] private int health;
     [SerializeField] private int buffChance;
 
+    private void Start()
+    {
+        defaultSpeed = agent.speed;
+    }
 
     void Update()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, PlayerMovement.instance.transform.position);
 
 
+        //  AboveGround   bool
+        //  UnderGround   bool
+        //  Die                  trigger
+        //  Attack              trigger
+
+
         switch (currentState)
         {
             case AIState.isIdle:
-                anim.SetBool("Moving", false);
+                //anim.SetBool("AboveGround", true);
+                agent.speed = 0;
 
                 if (distanceToPlayer <= chaseRange)
                 {
+                    // somwhere here can be delay
+
                     currentState = AIState.isChasing;
-                    anim.SetBool("Moving", true);
+                    anim.SetBool("UnderGround", true);
+                    agent.speed = defaultSpeed;
                 }
 
                 break;
@@ -48,7 +63,7 @@ public class WormEnemyController : MonoBehaviour
                 {
                     currentState = AIState.isAttacking;
                     anim.SetTrigger("Attack");
-                    anim.SetBool("Moving", false);
+                    //anim.SetBool("Moving", false);
 
                     agent.velocity = Vector3.zero;
                     agent.isStopped = true;

@@ -34,7 +34,7 @@ public class Gun : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             //UpgradeWeaponFireRate();
-            UpgradeWeaponDamage();
+            //UpgradeWeaponDamage();
         }
     }
 
@@ -47,6 +47,7 @@ public class Gun : MonoBehaviour
         set
         {
             damage = value;
+            Debug.Log("Damage was buff via setter");
         }
     }
 

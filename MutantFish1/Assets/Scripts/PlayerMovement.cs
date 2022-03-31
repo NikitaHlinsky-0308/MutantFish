@@ -169,8 +169,12 @@ public class PlayerMovement : MonoBehaviour
             case "HealthBuff":
                 Health = 2;
                 UpdateUI();
+                Debug.Log("Damage was buff");
                 Destroy(other.gameObject);
                 break;
+           /*
+            
+            */
 
             case "ProtectionBuff":
                 StartCoroutine(ProtectionBuff(5));

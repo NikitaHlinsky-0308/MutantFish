@@ -10,6 +10,8 @@ TagManager:
   - DamageBuff
   - HealthBuff
   - ProtectionBuff
+  - Enemy
+  - enemy
   layers:
   - Default
   - TransparentFX
